@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+      <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>        
+          
+      </head>
+<body>
+
+<h2>JavaScript in Body</h2>
+
+<p id="demo"></p>
+</body>
+
+<script>
+      //used in lcs function
+function max(a,b) 
+  { 
+        return (a > b)? a : b; 
+  } 
+//used in success function
+function lcs(X,Y,m,n) {
+  if (m == 0 || n == 0) 
+        return 0; 
+  if (X[m - 1] == Y[n - 1]) 
+        return 1 + lcs(X, Y, m - 1, n - 1); 
+  else
+        return max(lcs(X, Y, m, n - 1), lcs(X, Y, m - 1, n)); 
+}
+
+$(document).ready(function(){
+     // document.getElementById("demo").innerHTML=lcs("name1","name2",3,4);
+$.ajax({
+url:"algorithm1.csv",
+dataType:"text",
+}).done(successFunction);
+
+function successFunction(data) {
+ 
+      const lcname = [];
+      var allRows = data.split(/\r?\n|\r/);
+  for (var singleRow = 0; singleRow < allRows.length; singleRow++){
+    var rowCells = allRows[singleRow].split(',');
+    if(singleRow == 2){
+     for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+      lcname.push(rowCells[rowCell]);
+     }
+     document.getElementById("demo").innerHTML =lcs(lcname[0],lcname[1],lcname[0].length,lcname[1].length);
+  
+}}
+  }
+});
+</script>
+</html> 
